@@ -13,6 +13,7 @@ class Stock:
         misc = ["Ex-Dividend", "Split Ratio"]
         self.df = q.get(name, start_date=start_date,end_date=d.now())
         self.df.drop(labels=misc,axis=1,inplace=True)
+        df.index=pd.to_datetime(df.index)
         return self.df
         
     def to_csv(self,name,columns=True):
