@@ -33,7 +33,7 @@ class Stock(object):
     def to_text(self,dataframe=None,stockName=str):
         text=""
         path=str(d.now()).strip().replace(" ","")+stockName+".txt"
-        save_dir=str("./exports/"+path+".txt")
+        save_dir=str("./exports/"+path)
             
         toString = lambda o,c,h,l,v,ao,ac,ah,al,av,d: "{},{},{},{},{},{},{},{},{},{},{}\n".format(o,c,h,l,v,ao,ac,ah,al,av,d)
 
