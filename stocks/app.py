@@ -8,8 +8,8 @@ import pandas as pd
 
 from Figure.Figure import *
 
-df = pd.read_csv("./Google.csv")
-df["Date"]=pd.to_datetime(df.index)
+df = pd.read_csv("./datasets/2019-05-2315:25:17.702736apple.csv",index_col="Date")
+#df["Date"]=pd.to_datetime(df.index)
 gdp_cycle, gdp_trend = sm.tsa.filters.hpfilter(df.Close)
 df["Close Trend"] = gdp_trend
 

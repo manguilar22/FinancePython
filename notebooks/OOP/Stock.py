@@ -1,11 +1,24 @@
 import quandl as q
 import pandas as pd 
-from datetime import datetime as d
-import os 
+from datetime import datetime as d 
 
 class Stock(object):
     
-    df=None
+    df = None
+
+    stock_format = ['Date',
+                    'Open',
+                    'Close',
+                    'High',
+                    'Low',
+                    'Volume',
+                    'Adj. Open',
+                    'Adj. Close',
+                    'Adj. High',
+                    'Adj. Low',
+                    'Adj. Volume',
+                   ]
+
     
     def __init__(self):
         print("Stock Class Accessed :\t",str(d.now()))
@@ -16,27 +29,26 @@ class Stock(object):
         self.df.drop(labels=misc,axis=1,inplace=True)
         self.df.index=pd.to_datetime(self.df.index)
         self.df["Date"] = self.df.index
-        self.df = self.df[["Open","Close","High","Low","Volume","Adj. Open","Adj. Close","Adj. High","Adj. Low","Adj. Volume","Date"]]
+        self.df = self.df[["Open","Close","High","Low","Volume","Adj. Open","Adj. Close","Adj. High","Adj. Low","Adj. Volume"]]
         return self.df
     
     def dataset(self):
         return self.df
     
-    def to_csv(self,name,columns=True):
-        fileName = lambda s: "../stocks/"+s+str(d.now())+".csv"
-        print("Writing to file:\t",str(fileName))
-        self.df.to_csv(fileName(name),index=False,columns=columns,encoding="UTF-8")
-        
-    def current_dir(self):
-        return os.getcwd()
+    def save(self,fileName=str):
+        save = lambda s : str(d.now()).strip().replace(" ","")+s+".csv"
+        path = "../stocks/datasets/"+save(fileName)
+        print("Saving CSV file in:\t{}".format(path))
+        self.df = self.df[self.stock_format]
+        self.df.to_csv(path,index=False)
     
     def to_text(self,dataframe=None,stockName=str):
         text=""
         path=str(d.now()).strip().replace(" ","")+stockName+".txt"
         save_dir=str("./exports/"+path)
-            
-        toString = lambda o,c,h,l,v,ao,ac,ah,al,av,d: "{},{},{},{},{},{},{},{},{},{},{}\n".format(o,c,h,l,v,ao,ac,ah,al,av,d)
-
+        self.df["Date"] = pd.to_datetime(self.df.index)
+        toString = lambda o,c,h,l,v,ao,ac,ah,al,av,d: "{},{},{},{},{},{},{},{},{},{},{}\n".format(d,o,c,h,l,v,ao,ac,ah,al,av)
+        
         for e in range(len(dataframe)):
 
             text += toString(dataframe["Open"][e],
