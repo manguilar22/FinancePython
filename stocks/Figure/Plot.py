@@ -2,10 +2,8 @@ import plotly.graph_objs as go
 from dash_table import DataTable
 from pandas import DataFrame
 
-class Figure(object):
+class Figure:
 
-    def __init__(self):
-        pass
 
     def to_table(self,id=str,dataframe=None,n=5):
         """
