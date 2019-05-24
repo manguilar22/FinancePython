@@ -5,6 +5,7 @@ from dash_table import DataTable
 import plotly.graph_objs as go
 
 import pandas as pd
+from Figure.Figure import Figure
 
 stock_format = [    'Date',
                     'Open',
@@ -24,29 +25,20 @@ df = df[stock_format]
 
 app = Dash()
 
-table00 = DataTable(id="mytable",
-                    columns=[dict(id=e,label=e) for e in df.columns],
-                    data=df.head().to_dict("records"))
-
-fig00 = go.Ohlc(x=df["Date"],
-                open=df["Open"],
-                close=df["Close"],
-                high=df["High"],
-                low=df["Low"])
-
-fig01 = go.Candlestick(x=df['Date'],
-                open=df['Open'],
-                high=df['High'],
-                low=df['Low'],
-                close=df['Close'])
+table = Figure().to_table("my-table",df)
+ohlc = Figure().to_ohlc("my-ohlc",df)
+candle = Figure().to_candlestick("my-candle",df)
+scatter = Figure().to_scatter("my-scatter",df)
 
 app.layout = html.Div([
     html.H1("Plotly"),
-    table00,
+    table,
     html.H1("Ohlc"),
-    dcc.Graph(id="ohlc",figure=dict(data=[fig00])),
+    ohlc,
     html.H1("Candlestick"),
-    dcc.Graph(id="candlestick",figure=dict(data=[fig01]))
+    candle,
+    html.H1("Scatter Plot"),
+    scatter
 ])
 
 if __name__ == "__main__":
