@@ -1,0 +1,8 @@
+dash
+dash-core-components
+dash-html-components
+dash-renderer
+dash-table
+webencodings==0.5.1
+Werkzeug==0.15.4
+widgetsnbextension==3.4.2
